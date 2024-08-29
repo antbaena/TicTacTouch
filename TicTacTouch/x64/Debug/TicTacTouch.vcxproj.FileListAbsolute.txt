@@ -1,0 +1,10 @@
+C:\Users\Ant\source\repos\TicTacTouch\x64\Debug\TicTacTouch.vcxproj.AssemblyReference.cache
+C:\Users\Ant\source\repos\TicTacTouch\x64\Debug\TicTacTouch.vcxproj.GenerateResource.cache
+C:\Users\Ant\source\repos\TicTacTouch\x64\Debug\TicTacTouch.exe
+C:\Users\Ant\source\repos\TicTacTouch\x64\Debug\TicTacTouch.InitialScreen.resources
+C:\Users\Ant\source\repos\TicTacTouch\x64\Debug\TicTacTouch.GameScreen.resources
+C:\Users\Ant\Documents\GitHub\TicTacTouch\TicTacTouch\x64\Debug\TicTacTouch.vcxproj.AssemblyReference.cache
+C:\Users\Ant\Documents\GitHub\TicTacTouch\TicTacTouch\x64\Debug\TicTacTouch.GameScreen.resources
+C:\Users\Ant\Documents\GitHub\TicTacTouch\TicTacTouch\x64\Debug\TicTacTouch.InitialScreen.resources
+C:\Users\Ant\Documents\GitHub\TicTacTouch\TicTacTouch\x64\Debug\TicTacTouch.vcxproj.GenerateResource.cache
+C:\Users\Ant\Documents\GitHub\TicTacTouch\TicTacTouch\x64\Debug\TicTacTouch.exe
