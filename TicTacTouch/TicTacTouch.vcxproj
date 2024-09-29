@@ -130,8 +130,6 @@
     <ClInclude Include="InitialScreen.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GameScreen.resx">
@@ -140,13 +138,6 @@
     <EmbeddedResource Include="InitialScreen.resx">
       <DependentUpon>InitialScreen.h</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Resource.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\Desktop\blue-x.png" />
-    <Image Include="..\..\..\Desktop\red-o.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

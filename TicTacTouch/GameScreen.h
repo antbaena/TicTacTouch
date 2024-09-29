@@ -19,10 +19,15 @@ namespace TicTacTouch {
 		{
 			InitializeComponent();
 			this->difficultyPlaceholder->Text = difficulty;
-			
-			//
-			//TODO: Add the constructor code here
-			//
+			if (difficulty->ToLower() == "easy") {
+				difficultyLevel = 1;
+			}
+			else if (difficulty->ToLower() == "medium") {
+				difficultyLevel = 2;
+			}
+			else if (difficulty->ToLower() == "hard") {
+				difficultyLevel = 3;
+			}
 		}
 
 	protected:
@@ -55,7 +60,7 @@ namespace TicTacTouch {
 	private: System::Windows::Forms::Label^ label4;
 
 	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::Panel^ linePanel;
+	private: System::Windows::Forms::Panel^ buttonsPanel;
 
 
 
@@ -70,7 +75,8 @@ namespace TicTacTouch {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
+		int difficultyLevel;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -97,10 +103,10 @@ namespace TicTacTouch {
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->linePanel = (gcnew System::Windows::Forms::Panel());
+			this->buttonsPanel = (gcnew System::Windows::Forms::Panel());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
-			this->linePanel->SuspendLayout();
+			this->buttonsPanel->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// tittle1
@@ -145,7 +151,7 @@ namespace TicTacTouch {
 			this->button1->Size = System::Drawing::Size(50, 50);
 			this->button1->TabIndex = 3;
 			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &GameScreen::gameButtom_Click);
+			this->button1->Click += gcnew System::EventHandler(this, &GameScreen::gameButton_Click);
 			// 
 			// button2
 			// 
@@ -154,7 +160,7 @@ namespace TicTacTouch {
 			this->button2->Size = System::Drawing::Size(50, 50);
 			this->button2->TabIndex = 4;
 			this->button2->UseVisualStyleBackColor = true;
-			this->button2->Click += gcnew System::EventHandler(this, &GameScreen::gameButtom_Click);
+			this->button2->Click += gcnew System::EventHandler(this, &GameScreen::gameButton_Click);
 			// 
 			// button3
 			// 
@@ -163,7 +169,7 @@ namespace TicTacTouch {
 			this->button3->Size = System::Drawing::Size(50, 50);
 			this->button3->TabIndex = 5;
 			this->button3->UseVisualStyleBackColor = true;
-			this->button3->Click += gcnew System::EventHandler(this, &GameScreen::gameButtom_Click);
+			this->button3->Click += gcnew System::EventHandler(this, &GameScreen::gameButton_Click);
 			// 
 			// button4
 			// 
@@ -172,7 +178,7 @@ namespace TicTacTouch {
 			this->button4->Size = System::Drawing::Size(50, 50);
 			this->button4->TabIndex = 6;
 			this->button4->UseVisualStyleBackColor = true;
-			this->button4->Click += gcnew System::EventHandler(this, &GameScreen::gameButtom_Click);
+			this->button4->Click += gcnew System::EventHandler(this, &GameScreen::gameButton_Click);
 			// 
 			// button5
 			// 
@@ -181,7 +187,7 @@ namespace TicTacTouch {
 			this->button5->Size = System::Drawing::Size(50, 50);
 			this->button5->TabIndex = 7;
 			this->button5->UseVisualStyleBackColor = true;
-			this->button5->Click += gcnew System::EventHandler(this, &GameScreen::gameButtom_Click);
+			this->button5->Click += gcnew System::EventHandler(this, &GameScreen::gameButton_Click);
 			// 
 			// button6
 			// 
@@ -190,7 +196,7 @@ namespace TicTacTouch {
 			this->button6->Size = System::Drawing::Size(50, 50);
 			this->button6->TabIndex = 8;
 			this->button6->UseVisualStyleBackColor = true;
-			this->button6->Click += gcnew System::EventHandler(this, &GameScreen::gameButtom_Click);
+			this->button6->Click += gcnew System::EventHandler(this, &GameScreen::gameButton_Click);
 			// 
 			// button7
 			// 
@@ -199,7 +205,7 @@ namespace TicTacTouch {
 			this->button7->Size = System::Drawing::Size(50, 50);
 			this->button7->TabIndex = 9;
 			this->button7->UseVisualStyleBackColor = true;
-			this->button7->Click += gcnew System::EventHandler(this, &GameScreen::gameButtom_Click);
+			this->button7->Click += gcnew System::EventHandler(this, &GameScreen::gameButton_Click);
 			// 
 			// button8
 			// 
@@ -208,7 +214,7 @@ namespace TicTacTouch {
 			this->button8->Size = System::Drawing::Size(50, 50);
 			this->button8->TabIndex = 10;
 			this->button8->UseVisualStyleBackColor = true;
-			this->button8->Click += gcnew System::EventHandler(this, &GameScreen::gameButtom_Click);
+			this->button8->Click += gcnew System::EventHandler(this, &GameScreen::gameButton_Click);
 			// 
 			// button9
 			// 
@@ -217,7 +223,7 @@ namespace TicTacTouch {
 			this->button9->Size = System::Drawing::Size(50, 50);
 			this->button9->TabIndex = 11;
 			this->button9->UseVisualStyleBackColor = true;
-			this->button9->Click += gcnew System::EventHandler(this, &GameScreen::gameButtom_Click);
+			this->button9->Click += gcnew System::EventHandler(this, &GameScreen::gameButton_Click);
 			// 
 			// gameLabel
 			// 
@@ -273,29 +279,30 @@ namespace TicTacTouch {
 			this->label3->TabIndex = 16;
 			this->label3->Text = L"Enemy";
 			// 
-			// linePanel
+			// buttonsPanel
 			// 
-			this->linePanel->Controls->Add(this->button9);
-			this->linePanel->Controls->Add(this->button6);
-			this->linePanel->Controls->Add(this->button8);
-			this->linePanel->Controls->Add(this->button7);
-			this->linePanel->Controls->Add(this->button5);
-			this->linePanel->Controls->Add(this->button4);
-			this->linePanel->Controls->Add(this->button3);
-			this->linePanel->Controls->Add(this->button2);
-			this->linePanel->Controls->Add(this->button1);
-			this->linePanel->Location = System::Drawing::Point(145, 94);
-			this->linePanel->Name = L"linePanel";
-			this->linePanel->Size = System::Drawing::Size(263, 218);
-			this->linePanel->TabIndex = 17;
-			this->linePanel->BringToFront();
+			this->buttonsPanel->Controls->Add(this->button1);
+			this->buttonsPanel->Controls->Add(this->button2);
+			this->buttonsPanel->Controls->Add(this->button3);
+			this->buttonsPanel->Controls->Add(this->button4);
+			this->buttonsPanel->Controls->Add(this->button5);
+			this->buttonsPanel->Controls->Add(this->button6);
+			this->buttonsPanel->Controls->Add(this->button7);
+			this->buttonsPanel->Controls->Add(this->button8);
+			this->buttonsPanel->Controls->Add(this->button9);
+					
+			this->buttonsPanel->Location = System::Drawing::Point(145, 94);
+			this->buttonsPanel->Name = L"buttonsPanel";
+			this->buttonsPanel->Size = System::Drawing::Size(263, 218);
+			this->buttonsPanel->TabIndex = 17;
+			this->buttonsPanel->BringToFront();
 			// 
 			// GameScreen
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(572, 405);
-			this->Controls->Add(this->linePanel);
+			this->Controls->Add(this->buttonsPanel);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label4);
 			this->Controls->Add(this->pictureBox2);
@@ -308,322 +315,315 @@ namespace TicTacTouch {
 			this->Text = L"GameScreen";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
-			this->linePanel->ResumeLayout(false);
+			this->buttonsPanel->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	
-private: System::Void gameButtom_Click(System::Object^ sender, System::EventArgs^ e) {
-	Button^ clickedButton = safe_cast<Button^>(sender);
 
-	clickedButton->Text = "x";
-	clickedButton->Enabled = false;
+	private: System::Void gameButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		Button^ clickedButton = safe_cast<Button^>(sender);
 
-	this->gameLabel->Text = "Esperando a que el enemigo mueva ficha...";
+		clickedButton->Text = "X";
+		clickedButton->Enabled = false;
 
-	DisableAllButtons();
+		this->gameLabel->Text = "Waiting for the enemy's move...";
 
-	MoveEnemy(1);
+		DisableAllButtons();
 
-	if (!CheckForVictory()) {
-		CheckForAvailableSpaces();
-	}
-
-}
-private: System::Void MoveEnemy(int difficulty) {
-	// Obtén los botones disponibles
-	System::Collections::Generic::List<Button^>^ availableButtons = gcnew System::Collections::Generic::List<Button^>();
-	for each (Control ^ control in this->Controls) {
-		Button^ btn = dynamic_cast<Button^>(control);
-		if (btn != nullptr && btn->Text == "") {
-			availableButtons->Add(btn);
-		}
-	}
-
-	if (availableButtons->Count > 0) {
-		Button^ selectedButton = nullptr;
-
-		switch (difficulty) {
-		case 1: {
-			// Movimiento aleatorio
-			System::Random^ rand = gcnew System::Random();
-			int index = rand->Next(availableButtons->Count);
-			selectedButton = availableButtons[index];
-			break;
-		}	
-		case 2: {
-			// IA media
-			selectedButton = MediumAI(availableButtons);
-			break;
-		}
-		case 3: {
-			// IA difícil
-			selectedButton = HardAI(availableButtons);
-			break;
+		if (!CheckForVictory()) {
+			if (HasAvailableSpaces()) {
+				MoveEnemy(this->difficultyLevel);  // Adjust difficulty as needed
 			}
 		}
+	}
 
-		if (selectedButton != nullptr) {
-			selectedButton->Text = "O";
-			// selectedButton->BackgroundImage = gcnew System::Drawing::Bitmap("ruta/de/la/imagen.bmp");
-			// selectedButton->BackgroundImageLayout = ImageLayout::Stretch;
+	private: System::Void MoveEnemy(int difficulty) {
+		System::Collections::Generic::List<Button^>^ availableButtons = GetAvailableButtons();
+
+		if (availableButtons->Count > 0) {
+			Button^ selectedButton = nullptr;
+
+			switch (difficulty) {
+			case 1: {  // Random move
+				System::Random^ rand = gcnew System::Random();
+				int index = rand->Next(availableButtons->Count);
+				selectedButton = availableButtons[index];
+				break;
+			}
+			case 2: {  // Medium AI
+				selectedButton = MediumAI(availableButtons);
+				break;
+			}
+			case 3: {  // Hard AI
+				selectedButton = HardAI(availableButtons);
+				break;
+			}
+			}
+
+			if (selectedButton != nullptr) {
+				selectedButton->Text = "O";
+				selectedButton->Enabled = false;
+			}
+		}
+		if (!CheckForVictory()) {
+			EnableAvailableButtons();
 		}
 	}
 
-	EnableAllFreeButtons();
-}
-
-private: Button^ MediumAI(System::Collections::Generic::List<Button^>^ availableButtons) {
-	// Implementar la lógica de la IA media
-	// Intenta ganar o bloquear y si no, elige un movimiento aleatorio
-	for each (Button ^ btn in availableButtons) {
-		// Verificar si el botón puede ganar
-		// Esto es un ejemplo, deberías implementar tu propia lógica
-		if (CanWin(btn)) {
-			return btn;
+	public: System::Collections::Generic::List<Button^>^ GetAvailableButtons() {
+		System::Collections::Generic::List<Button^>^ availableButtons = gcnew System::Collections::Generic::List<Button^>();
+		for each (Control ^ control in buttonsPanel->Controls) {
+			Button^ btn = dynamic_cast<Button^>(control);
+			if (btn != nullptr && btn->Text == "") {
+				availableButtons->Add(btn);
+			}
 		}
+		return availableButtons;
 	}
 
-	for each (Button ^ btn in availableButtons) {
-		// Verificar si el botón puede bloquear al oponente
-		// Esto es un ejemplo, deberías implementar tu propia lógica
-		if (CanBlock(btn)) {
-			return btn;
+	private: Button^ MediumAI(System::Collections::Generic::List<Button^>^ availableButtons) {
+		for each (Button ^ btn in availableButtons) {
+			if (CanWin(btn)) return btn;  // Attempt to win
 		}
+
+		for each (Button ^ btn in availableButtons) {
+			if (CanBlock(btn)) return btn;  // Block the opponent
+		}
+
+		// If no strategic move, pick randomly
+		System::Random^ rand = gcnew System::Random();
+		int index = rand->Next(availableButtons->Count);
+		return availableButtons[index];
 	}
 
-	// Si no hay movimientos estratégicos, elige aleatoriamente
-	System::Random^ rand = gcnew System::Random();
-	int index = rand->Next(availableButtons->Count);
-	return availableButtons[index];
-}
-
-private: Button^ HardAI(System::Collections::Generic::List<Button^>^ availableButtons) {
-	// Implementar Minimax para la IA difícil
-	// Esto es un ejemplo y deberías implementar el algoritmo Minimax completo aquí
-	Button^ bestMove = nullptr;
-	int bestScore = -9999;
-
-	for each (Button ^ btn in availableButtons) {
-		// Simula el movimiento
-		btn->Text = "O";
-		int score = Minimax(false); // Cambia el turno
-		btn->Text = ""; // Deshacer movimiento
-
-		if (score > bestScore) {
-			bestScore = score;
-			bestMove = btn;
-		}
-	}
-
-	return bestMove;
-}
-
-private: int Minimax(bool isMaximizing) {
-	// Implementar el algoritmo Minimax aquí
-	// Retorna el puntaje de la jugada
-	// Ejemplo simple, debes reemplazar esto con la lógica completa
-	if (IsWin("O")) return 10;
-	if (IsWin("X")) return -10;
-	if (IsDraw()) return 0;
-
-	if (isMaximizing) {
+	private: Button^ HardAI(System::Collections::Generic::List<Button^>^ availableButtons) {
+		Button^ bestMove = nullptr;
 		int bestScore = -9999;
-		for (int i = 0; i < this->Controls->Count; i++) {
-			Button^ btn = dynamic_cast<Button^>(this->Controls[i]);
-			if (btn != nullptr && btn->Text == "") {
-				btn->Text = "O";
-				int score = Minimax(false);
-				btn->Text = "";
-				bestScore = std::max(score, bestScore);
-			}
-		}
-		return bestScore;
-	}
-	else {
-		int bestScore = 9999;
-		for (int i = 0; i < this->Controls->Count; i++) {
-			Button^ btn = dynamic_cast<Button^>(this->Controls[i]);
-			if (btn != nullptr && btn->Text == "") {
-				btn->Text = "X";
-				int score = Minimax(true);
-				btn->Text = "";
-				bestScore = std::min(score, bestScore);
-			}
-		}
-		return bestScore;
-	}
-}
-private: bool IsWin(System::String^ player) {
-	// Las combinaciones ganadoras
-	array<int>^ winConditions = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
-	array<array<int>^>^ winningPatterns = {
-		gcnew array<int>{0, 1, 2}, // Horizontal
-		gcnew array<int>{3, 4, 5},
-		gcnew array<int>{6, 7, 8},
-		gcnew array<int>{0, 3, 6}, // Vertical
-		gcnew array<int>{1, 4, 7},
-		gcnew array<int>{2, 5, 8},
-		gcnew array<int>{0, 4, 8}, // Diagonal
-		gcnew array<int>{2, 4, 6}
-	};
 
-	for each (array<int> ^ pattern in winningPatterns) {
-		if (this->Controls[pattern[0]]->Text == player &&
-			this->Controls[pattern[1]]->Text == player &&
-			this->Controls[pattern[2]]->Text == player) {
+		for each (Button ^ btn in availableButtons) {
+			btn->Text = "O";  // Suponemos que "O" es la IA
+			int score = Minimax(false, -9999, 9999);  // Simulamos el turno del oponente
+			btn->Text = "";  // Deshacemos el movimiento
+
+			if (score > bestScore) {
+				bestScore = score;
+				bestMove = btn;
+			}
+		}
+		return bestMove;
+	}
+
+	private: int Minimax(bool isMaximizing, int alpha, int beta) {
+		if (IsWin("O")) return 10;  // IA gana
+		if (IsWin("X")) return -10;  // Jugador gana
+		if (IsDraw()) return 0;  // Empate
+
+		int bestScore = isMaximizing ? -9999 : 9999;
+
+		for each (Control ^ control in buttonsPanel->Controls) {
+			Button^ btn = dynamic_cast<Button^>(control);
+			if (btn != nullptr && btn->Text == "") {  // Casilla vacía
+				btn->Text = isMaximizing ? "O" : "X";  // Simula la jugada
+				int score = Minimax(!isMaximizing, alpha, beta);  // Cambia el turno
+				btn->Text = "";  // Deshace la jugada
+
+				if (isMaximizing) {
+					bestScore = std::max(score, bestScore);
+					alpha = std::max(alpha, bestScore);
+				}
+				else {
+					bestScore = std::min(score, bestScore);
+					beta = std::min(beta, bestScore);
+				}
+				if (beta <= alpha) {
+					break;  
+				}
+			}
+		}
+		return bestScore;
+	}
+
+	private: bool IsWin(System::String^ player) {
+		// Representación de las combinaciones ganadoras
+		System::Collections::Generic::List<array<int>^>^ winPatterns = gcnew System::Collections::Generic::List<array<int>^>();
+
+		// Horizontal
+		winPatterns->Add(gcnew array<int>{0, 1, 2});
+		winPatterns->Add(gcnew array<int>{3, 4, 5});
+		winPatterns->Add(gcnew array<int>{6, 7, 8});
+
+		// Vertical
+		winPatterns->Add(gcnew array<int>{0, 3, 6});
+		winPatterns->Add(gcnew array<int>{1, 4, 7});
+		winPatterns->Add(gcnew array<int>{2, 5, 8});
+
+		// Diagonal
+		winPatterns->Add(gcnew array<int>{0, 4, 8});
+		winPatterns->Add(gcnew array<int>{2, 4, 6});
+
+		// Verifica si hay alguna combinación ganadora
+		for each (array<int> ^ pattern in winPatterns) {
+			if (buttonsPanel->Controls[pattern[0]]->Text == player &&
+				buttonsPanel->Controls[pattern[1]]->Text == player &&
+				buttonsPanel->Controls[pattern[2]]->Text == player) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+		  private: void PrintBoard() {
+			  String^ boardState = "Estado del tablero:\n";
+
+			  for (int i = 0; i < 3; i++) {
+				  for (int j = 0; j < 3; j++) {
+					  Button^ btn = dynamic_cast<Button^>(buttonsPanel->Controls[i * 3 + j]);
+					  boardState += (btn->Text == "" ? " . " : " " + btn->Text + " ");
+				  }
+				  boardState += "\n";  // Nueva línea después de cada fila
+			  }
+
+			  // Mostrar el estado del tablero en un MessageBox
+			  MessageBox::Show(boardState, "Estado del Tablero");
+		  }
+	private: bool IsDraw() {
+		for each (Control ^ control in buttonsPanel->Controls) {
+			Button^ btn = dynamic_cast<Button^>(control);
+			if (btn != nullptr && btn->Text == "") return false;  // Si hay casillas vacías, no es empate
+		}
+		// Si no hay ganador y no hay casillas vacías, es empate
+		return !IsWin("X") && !IsWin("O");
+	}
+
+	private: bool CanWin(Button^ btn) {
+		btn->Text = "O";
+		bool win = IsWin("O");
+		btn->Text = "";  // Undo
+		return win;
+	}
+
+	private: bool CanBlock(Button^ btn) {
+		btn->Text = "X";
+		bool block = IsWin("X");
+		btn->Text = "";  // Undo
+		return block;
+	}
+
+	private: System::Void CheckForAvailableSpaces() {
+		if (!HasAvailableSpaces()) {
+			this->gameLabel->Text = "Game Over!";
+		}
+		else {
+			EnableAvailableButtons();
+		}
+	}
+
+	private: bool HasAvailableSpaces() {
+		return GetAvailableButtons()->Count > 0;
+	}
+
+	private: System::Void DisableAllButtons() {
+		for each (Control ^ control in buttonsPanel->Controls) {
+			Button^ btn = dynamic_cast<Button^>(control);
+			if (btn != nullptr) {
+				btn->Enabled = false;
+			}
+		}
+	}
+
+	private: System::Void EnableAvailableButtons() {
+		for each (Control ^ control in buttonsPanel->Controls) {
+			Button^ btn = dynamic_cast<Button^>(control);
+			if (btn != nullptr && btn->Text == "") {
+				btn->Enabled = true;
+			}
+		}
+	}
+
+	private: System::Boolean CheckForVictory() {
+		array<Button^>^ buttons = gcnew array<Button^>{
+			this->button1, this->button2, this->button3,
+				this->button4, this->button5, this->button6,
+				this->button7, this->button8, this->button9
+		};
+
+		// Check rows
+		for (int i = 0; i < 9; i += 3) {
+			if (buttons[i]->Text != "" && buttons[i]->Text == buttons[i + 1]->Text && buttons[i]->Text == buttons[i + 2]->Text) {
+				this->gameLabel->Text = buttons[i]->Text + " has won!";
+				DrawWinningLine(buttons, i, i + 1, i + 2);
+				DisableAllButtons();
+				return true;
+			}
+		}
+
+		// Check columns
+		for (int i = 0; i < 3; ++i) {
+			if (buttons[i]->Text != "" && buttons[i]->Text == buttons[i + 3]->Text && buttons[i]->Text == buttons[i + 6]->Text) {
+				this->gameLabel->Text = buttons[i]->Text + " has won!";
+				DrawWinningLine(buttons, i, i + 3, i + 6);
+				DisableAllButtons();
+				return true;
+			}
+		}
+
+		// Check diagonals
+		if (buttons[0]->Text != "" && buttons[0]->Text == buttons[4]->Text && buttons[0]->Text == buttons[8]->Text) {
+			this->gameLabel->Text = buttons[0]->Text + " has won!";
+			DrawWinningLine(buttons, 0, 4, 8);
+			DisableAllButtons();
 			return true;
 		}
+		if (buttons[2]->Text != "" && buttons[2]->Text == buttons[4]->Text && buttons[2]->Text == buttons[6]->Text) {
+			this->gameLabel->Text = buttons[2]->Text + " has won!";
+			DrawWinningLine(buttons, 2, 4, 6);
+			DisableAllButtons();
+			return true;
+		}
+
+		return false;
 	}
 
-	return false;
-}
-private: bool IsDraw() {
-	// Verifica si todos los botones están ocupados
-	for (int i = 0; i < this->Controls->Count; i++) {
-		Button^ btn = dynamic_cast<Button^>(this->Controls[i]);
-		if (btn != nullptr && btn->Text == "") {
-			return false;
+	private: System::Void DrawWinningLine(array<Button^>^ buttons, int start, int middle, int end) {
+		// Puedes ajustar el color y grosor de la línea aquí
+		System::Drawing::Pen^ winningLinePen = gcnew System::Drawing::Pen(System::Drawing::Color::Red, 5);
+
+		// Configura el panel de líneas
+		Panel^ buttonsPanel = this->buttonsPanel;
+		buttonsPanel->Refresh();
+
+		// Obtén las coordenadas de los botones para dibujar la línea
+		System::Drawing::Rectangle rectStart = buttons[start]->Bounds;
+		System::Drawing::Rectangle rectMiddle = buttons[middle]->Bounds;
+		System::Drawing::Rectangle rectEnd = buttons[end]->Bounds;
+
+		// Calcula la posición y tamaño de la línea
+		System::Drawing::Graphics^ g = buttonsPanel->CreateGraphics();
+		if (start == end) {
+			// Línea vertical
+			g->DrawLine(winningLinePen,
+				rectStart.X + rectStart.Width / 2, rectStart.Y,
+				rectStart.X + rectStart.Width / 2, rectStart.Y + rectStart.Height);
+		}
+		else if (middle == end) {
+			// Línea horizontal
+			g->DrawLine(winningLinePen,
+				rectStart.X, rectStart.Y + rectStart.Height / 2,
+				rectEnd.X + rectEnd.Width, rectEnd.Y + rectEnd.Height / 2);
+		}
+		else {
+			// Línea diagonal
+			g->DrawLine(winningLinePen,
+				rectStart.X, rectStart.Y,
+				rectEnd.X + rectEnd.Width, rectEnd.Y + rectEnd.Height);
 		}
 	}
 
-	// Verifica si no hay ganador
-	return !IsWin("X") && !IsWin("O");
-}
-private: bool CanWin(Button^ btn) {
-	// Simula el movimiento
-	btn->Text = "O";
-	bool win = IsWin("O");
-	btn->Text = ""; // Deshacer movimiento
-	return win;
-}
-private: bool CanBlock(Button^ btn) {
-	// Simula el movimiento
-	btn->Text = "X";
-	bool block = IsWin("X");
-	btn->Text = ""; // Deshacer movimiento
-	return block;
-}
 
-
-
-private: System::Void CheckForAvailableSpaces() {
-	bool spacesLeft = false;
-
-	for each (Control ^ control in this->Controls) {
-		Button^ btn = dynamic_cast<Button^>(control);
-		if (btn != nullptr && btn->Enabled == true) {
-			spacesLeft = true;
-			break;
-		}
-	}
-	if (!spacesLeft) {
-		this->gameLabel->Text = "¡Juego terminado!";
-	}
-	else {
-		EnableAllFreeButtons();
-	}
-}
-
-private: System::Void DisableAllButtons() {
-	for each (Control ^ control in this->Controls) {
-		Button^ btn = dynamic_cast<Button^>(control);
-		if (btn != nullptr) {
-			btn->Enabled = false;
-		}
-	}
-}
-
-private: System::Void EnableAllFreeButtons() {
-	for each (Control ^ control in this->Controls) {
-		Button^ btn = dynamic_cast<Button^>(control);
-		if (btn != nullptr && btn->BackgroundImage == nullptr && btn->Text == "") {
-			btn->Enabled = true;
-		}
-	}
-}
-private: System::Int16 CheckForVictory() {
-	array<Button^>^ buttons = gcnew array<Button^>{
-		this->button1, this->button2, this->button3,
-			this->button4, this->button5, this->button6,
-			this->button7, this->button8, this->button9
 	};
 
-	// Comprobación de filas
-	for (int i = 0; i < 9; i += 3) {
-		if (buttons[i]->Text != "" && buttons[i]->Text == buttons[i + 1]->Text && buttons[i]->Text == buttons[i + 2]->Text) {
-			this->gameLabel->Text = buttons[i]->Text + " ha ganado!";
-			DrawWinningLine(buttons, i, i + 1, i + 2);
-			DisableAllButtons();
-			return 1;
-		}
-	}
 
-	// Comprobación de columnas
-	for (int i = 0; i < 3; ++i) {
-		if (buttons[i]->Text != "" && buttons[i]->Text == buttons[i + 3]->Text && buttons[i]->Text == buttons[i + 6]->Text) {
-			this->gameLabel->Text = buttons[i]->Text + " ha ganado!";
-			DrawWinningLine(buttons, i, i + 3, i + 6);
-			DisableAllButtons();
-			return 1;
-		}
-	}
-
-	// Comprobación de diagonales
-	if (buttons[0]->Text != "" && buttons[0]->Text == buttons[4]->Text && buttons[0]->Text == buttons[8]->Text) {
-		this->gameLabel->Text = buttons[0]->Text + " ha ganado!";
-		DrawWinningLine(buttons, 0, 4, 8);
-		DisableAllButtons();
-		return 1;
-	}
-	if (buttons[2]->Text != "" && buttons[2]->Text == buttons[4]->Text && buttons[2]->Text == buttons[6]->Text) {
-		this->gameLabel->Text = buttons[2]->Text + " ha ganado!";
-		DrawWinningLine(buttons, 2, 4, 6);
-		DisableAllButtons();
-		return 1;
-	}
-	return 0;
-}
-private: System::Void DrawWinningLine(array<Button^>^ buttons, int start, int middle, int end) {
-	// Puedes ajustar el color y grosor de la línea aquí
-	System::Drawing::Pen^ winningLinePen = gcnew System::Drawing::Pen(System::Drawing::Color::Red, 5);
-
-	// Configura el panel de líneas
-	Panel^ linePanel = this->linePanel;
-	linePanel->Refresh();
-
-	// Obtén las coordenadas de los botones para dibujar la línea
-	System::Drawing::Rectangle rectStart = buttons[start]->Bounds;
-	System::Drawing::Rectangle rectMiddle = buttons[middle]->Bounds;
-	System::Drawing::Rectangle rectEnd = buttons[end]->Bounds;
-
-	// Calcula la posición y tamaño de la línea
-	System::Drawing::Graphics^ g = linePanel->CreateGraphics();
-	if (start == end) {
-		// Línea vertical
-		g->DrawLine(winningLinePen,
-			rectStart.X + rectStart.Width / 2, rectStart.Y,
-			rectStart.X + rectStart.Width / 2, rectStart.Y + rectStart.Height);
-	}
-	else if (middle == end) {
-		// Línea horizontal
-		g->DrawLine(winningLinePen,
-			rectStart.X, rectStart.Y + rectStart.Height / 2,
-			rectEnd.X + rectEnd.Width, rectEnd.Y + rectEnd.Height / 2);
-	}
-	else {
-		// Línea diagonal
-		g->DrawLine(winningLinePen,
-			rectStart.X, rectStart.Y,
-			rectEnd.X + rectEnd.Width, rectEnd.Y + rectEnd.Height);
-	}
-}
-
-
-};
-	
-	
 
 }
