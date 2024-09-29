@@ -110,6 +110,8 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies />
+      <EntryPointSymbol>main</EntryPointSymbol>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -121,7 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameScreen.cpp" />
-    <ClCompile Include="InitilaScreen.cpp" />
+    <ClCompile Include="InitialScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScreen.h">

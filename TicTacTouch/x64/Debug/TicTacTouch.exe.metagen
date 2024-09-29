@@ -20,6 +20,6 @@ Class TicTacTouch.GameScreen: AutoLayout, AnsiClass, Class, Public, BeforeFieldI
     Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Methods:
     GetAvailableButtons(): PrivateScope, Public, HideBySig
-Class TicTacTouch.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+Class TicTacTouch.InitialScreen: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
