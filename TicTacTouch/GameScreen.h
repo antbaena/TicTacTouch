@@ -290,7 +290,7 @@ namespace TicTacTouch {
 			this->buttonsPanel->Controls->Add(this->button7);
 			this->buttonsPanel->Controls->Add(this->button8);
 			this->buttonsPanel->Controls->Add(this->button9);
-					
+
 			this->buttonsPanel->Location = System::Drawing::Point(145, 94);
 			this->buttonsPanel->Name = L"buttonsPanel";
 			this->buttonsPanel->Size = System::Drawing::Size(263, 218);
@@ -438,7 +438,7 @@ namespace TicTacTouch {
 					beta = std::min(beta, bestScore);
 				}
 				if (beta <= alpha) {
-					break;  
+					break;
 				}
 			}
 		}
@@ -474,20 +474,20 @@ namespace TicTacTouch {
 
 		return false;
 	}
-		  private: void PrintBoard() {
-			  String^ boardState = "Estado del tablero:\n";
+	private: void PrintBoard() {
+		String^ boardState = "Estado del tablero:\n";
 
-			  for (int i = 0; i < 3; i++) {
-				  for (int j = 0; j < 3; j++) {
-					  Button^ btn = dynamic_cast<Button^>(buttonsPanel->Controls[i * 3 + j]);
-					  boardState += (btn->Text == "" ? " . " : " " + btn->Text + " ");
-				  }
-				  boardState += "\n";  // Nueva línea después de cada fila
-			  }
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				Button^ btn = dynamic_cast<Button^>(buttonsPanel->Controls[i * 3 + j]);
+				boardState += (btn->Text == "" ? " . " : " " + btn->Text + " ");
+			}
+			boardState += "\n";  // Nueva línea después de cada fila
+		}
 
-			  // Mostrar el estado del tablero en un MessageBox
-			  MessageBox::Show(boardState, "Estado del Tablero");
-		  }
+		// Mostrar el estado del tablero en un MessageBox
+		MessageBox::Show(boardState, "Estado del Tablero");
+	}
 	private: bool IsDraw() {
 		for each (Control ^ control in buttonsPanel->Controls) {
 			Button^ btn = dynamic_cast<Button^>(control);
