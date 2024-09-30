@@ -195,6 +195,7 @@ namespace TicTacTouch {
 			   this->Controls->Add(this->closeCutton);
 			   this->Controls->Add(this->startButton);
 			   this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
+			   this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			   this->MaximizeBox = false;
 			   this->Name = L"InitialScreen";
 			   this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
