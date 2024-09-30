@@ -143,8 +143,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Escritorio\blue_o.png" />
-    <Image Include="..\..\..\Escritorio\red_x.png" />
+    <Image Include="..\images\blue_o.png" />
+    <Image Include="..\images\red_x.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
