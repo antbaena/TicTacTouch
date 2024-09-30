@@ -14,10 +14,10 @@ namespace TicTacTouch {
 	{
 
 	public:
-		GameScreen( String^ difficulty)
+		GameScreen(String^ difficulty)
 		{
 			InitializeComponent();
-			
+
 			this->difficulty = difficulty;
 			this->difficultyPlaceholder->Text = difficulty;
 			this->Text += difficulty;
@@ -58,12 +58,8 @@ namespace TicTacTouch {
 	private: System::Windows::Forms::Button^ buttonExit;
 	private: System::Windows::Forms::Button^ buttonReset;
 	private: System::Windows::Forms::Button^ buttonChangeDif;
-
-
-
-		
-		int difficultyLevel;
-		String^ difficulty;
+	private: int difficultyLevel;
+	private: String^ difficulty;
 
 #pragma region Windows Form Designer generated code
 
@@ -316,7 +312,6 @@ namespace TicTacTouch {
 			   this->buttonChangeDif->Text = L"Change difficulty";
 			   this->buttonChangeDif->UseVisualStyleBackColor = false;
 			   this->buttonChangeDif->Visible = false;
-			   this->buttonChangeDif->Click += gcnew System::EventHandler(this, &GameScreen::buttonChangeDif_Click);
 			   // 
 			   // GameScreen
 			   // 
@@ -343,6 +338,9 @@ namespace TicTacTouch {
 		   }
 #pragma endregion
 
+	// Class-level random instance to avoid continuous recreation
+	private: System::Random^ randomGen = gcnew System::Random();
+
 	private: System::Void gameButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		Button^ clickedButton = safe_cast<Button^>(sender);
 
@@ -350,37 +348,29 @@ namespace TicTacTouch {
 		clickedButton->Enabled = false;
 
 		this->gameLabel->Text = "Waiting for the enemy's move...";
-
 		DisableAllButtons();
 
-		if (!CheckForVictory()) {
-			if (HasAvailableSpaces()) {
-				MoveEnemy(this->difficultyLevel);  // Adjust difficulty as needed
-			}
+		if (!CheckForVictory() && HasAvailableSpaces()) {
+			MoveEnemy(this->difficultyLevel);  
 		}
 	}
 
 	private: System::Void MoveEnemy(int difficulty) {
-		System::Collections::Generic::List<Button^>^ availableButtons = GetAvailableButtons();
+		auto availableButtons = GetAvailableButtons();
 
 		if (availableButtons->Count > 0) {
 			Button^ selectedButton = nullptr;
 
 			switch (difficulty) {
-			case 1: {  // Random move
-				System::Random^ rand = gcnew System::Random();
-				int index = rand->Next(availableButtons->Count);
-				selectedButton = availableButtons[index];
+			case 1:  // Random move
+				selectedButton = availableButtons[randomGen->Next(availableButtons->Count)];
 				break;
-			}
-			case 2: {  // Medium AI
+			case 2:  // Medium AI
 				selectedButton = MediumAI(availableButtons);
 				break;
-			}
-			case 3: {  // Hard AI
+			case 3:  // Hard AI
 				selectedButton = HardAI(availableButtons);
 				break;
-			}
 			}
 
 			if (selectedButton != nullptr) {
@@ -388,17 +378,17 @@ namespace TicTacTouch {
 				selectedButton->Enabled = false;
 			}
 		}
+
 		if (!CheckForVictory()) {
-			this->gameLabel->Text = L"Select a square to continue!";
+			this->gameLabel->Text = "Select a square to continue!";
 			EnableAvailableButtons();
 		}
 	}
 
 	public: System::Collections::Generic::List<Button^>^ GetAvailableButtons() {
-		System::Collections::Generic::List<Button^>^ availableButtons = gcnew System::Collections::Generic::List<Button^>();
-		for each (Control ^ control in buttonsPanel->Controls) {
-			Button^ btn = dynamic_cast<Button^>(control);
-			if (btn != nullptr && btn->Text == "") {
+		auto availableButtons = gcnew System::Collections::Generic::List<Button^>();
+		for each (Button ^ btn in buttonsPanel->Controls) {
+			if (btn->Text == "") {
 				availableButtons->Add(btn);
 			}
 		}
@@ -414,10 +404,8 @@ namespace TicTacTouch {
 			if (CanBlock(btn)) return btn;  // Block the opponent
 		}
 
-		// If no strategic move, pick randomly
-		System::Random^ rand = gcnew System::Random();
-		int index = rand->Next(availableButtons->Count);
-		return availableButtons[index];
+		// If no strategic moves, pick randomly
+		return availableButtons[randomGen->Next(availableButtons->Count)];
 	}
 
 	private: Button^ HardAI(System::Collections::Generic::List<Button^>^ availableButtons) {
@@ -425,9 +413,9 @@ namespace TicTacTouch {
 		int bestScore = -9999;
 
 		for each (Button ^ btn in availableButtons) {
-			btn->Text = "O";  // Suponemos que "O" es la IA
-			int score = Minimax(false, -9999, 9999);  // Simulamos el turno del oponente
-			btn->Text = "";  // Deshacemos el movimiento
+			btn->Text = "O";  // Simulate AI move
+			int score = Minimax(false, -9999, 9999);  // Simulate opponent's turn
+			btn->Text = "";  // Undo move
 
 			if (score > bestScore) {
 				bestScore = score;
@@ -438,18 +426,17 @@ namespace TicTacTouch {
 	}
 
 	private: int Minimax(bool isMaximizing, int alpha, int beta) {
-		if (IsWin("O")) return 10;  // IA gana
-		if (IsWin("X")) return -10;  // Jugador gana
-		if (IsDraw()) return 0;  // Empate
+		if (IsWin("O")) return 10;  // AI wins
+		if (IsWin("X")) return -10;  // Player wins
+		if (IsDraw()) return 0;  // Draw
 
 		int bestScore = isMaximizing ? -9999 : 9999;
 
-		for each (Control ^ control in buttonsPanel->Controls) {
-			Button^ btn = dynamic_cast<Button^>(control);
-			if (btn != nullptr && btn->Text == "") {  // Casilla vacía
-				btn->Text = isMaximizing ? "O" : "X";  // Simula la jugada
-				int score = Minimax(!isMaximizing, alpha, beta);  // Cambia el turno
-				btn->Text = "";  // Deshace la jugada
+		for each (Button ^ btn in buttonsPanel->Controls) {
+			if (btn->Text == "") {  // Empty square
+				btn->Text = isMaximizing ? "O" : "X";  // Simulate the move
+				int score = Minimax(!isMaximizing, alpha, beta);  // Switch turn
+				btn->Text = "";  // Undo the move
 
 				if (isMaximizing) {
 					bestScore = std::max(score, bestScore);
@@ -459,8 +446,10 @@ namespace TicTacTouch {
 					bestScore = std::min(score, bestScore);
 					beta = std::min(beta, bestScore);
 				}
+
+				// Alpha-beta pruning
 				if (beta <= alpha) {
-					break;
+					break;  // Prune: no need to evaluate more nodes
 				}
 			}
 		}
@@ -472,24 +461,19 @@ namespace TicTacTouch {
 	}
 
 	private: array<int>^ checkIfWin(System::String^ player) {
-		// Representación de las combinaciones ganadoras
-		System::Collections::Generic::List<array<int>^>^ winPatterns = gcnew System::Collections::Generic::List<array<int>^>();
+		// Representation of winning combinations
+		array<array<int>^>^ winPatterns = gcnew array<array<int>^> {
+			gcnew array<int>{0, 1, 2},  // Horizontals
+				gcnew array<int>{3, 4, 5},
+				gcnew array<int>{6, 7, 8},
+				gcnew array<int>{0, 3, 6},  // Verticals
+				gcnew array<int>{1, 4, 7},
+				gcnew array<int>{2, 5, 8},
+				gcnew array<int>{0, 4, 8},  // Diagonals
+				gcnew array<int>{2, 4, 6}
+		};
 
-		// Horizontal
-		winPatterns->Add(gcnew array<int>{0, 1, 2});
-		winPatterns->Add(gcnew array<int>{3, 4, 5});
-		winPatterns->Add(gcnew array<int>{6, 7, 8});
-
-		// Vertical
-		winPatterns->Add(gcnew array<int>{0, 3, 6});
-		winPatterns->Add(gcnew array<int>{1, 4, 7});
-		winPatterns->Add(gcnew array<int>{2, 5, 8});
-
-		// Diagonal
-		winPatterns->Add(gcnew array<int>{0, 4, 8});
-		winPatterns->Add(gcnew array<int>{2, 4, 6});
-
-		// Verifica si hay alguna combinación ganadora
+		// Check if there's a winning combination
 		for each (array<int> ^ pattern in winPatterns) {
 			if (buttonsPanel->Controls[pattern[0]]->Text == player &&
 				buttonsPanel->Controls[pattern[1]]->Text == player &&
@@ -497,45 +481,29 @@ namespace TicTacTouch {
 				return pattern;
 			}
 		}
-
 		return nullptr;
 	}
 
-	private: void PrintBoard() {
-		String^ boardState = "Estado del tablero:\n";
-
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				Button^ btn = dynamic_cast<Button^>(buttonsPanel->Controls[i * 3 + j]);
-				boardState += (btn->Text == "" ? " . " : " " + btn->Text + " ");
-			}
-			boardState += "\n";  // Nueva línea después de cada fila
-		}
-
-		// Mostrar el estado del tablero en un MessageBox
-		MessageBox::Show(boardState, "Estado del Tablero");
-	}
-
 	private: bool IsDraw() {
-		for each (Control ^ control in buttonsPanel->Controls) {
-			Button^ btn = dynamic_cast<Button^>(control);
-			if (btn != nullptr && btn->Text == "") return false;  // Si hay casillas vacías, no es empate
+		// If there are empty squares, it's not a draw
+		for each (Button ^ btn in buttonsPanel->Controls) {
+			if (btn->Text == "") return false;
 		}
-		// Si no hay ganador y no hay casillas vacías, es empate
+		// If there's no winner and no empty squares, it's a draw
 		return !IsWin("X") && !IsWin("O");
 	}
 
 	private: bool CanWin(Button^ btn) {
-		btn->Text = "O";
+		btn->Text = "O";  
 		bool win = IsWin("O");
-		btn->Text = "";  // Undo
+		btn->Text = "";  
 		return win;
 	}
 
 	private: bool CanBlock(Button^ btn) {
-		btn->Text = "X";
+		btn->Text = "X";  
 		bool block = IsWin("X");
-		btn->Text = "";  // Undo
+		btn->Text = "";  
 		return block;
 	}
 
@@ -553,18 +521,14 @@ namespace TicTacTouch {
 	}
 
 	private: System::Void DisableAllButtons() {
-		for each (Control ^ control in buttonsPanel->Controls) {
-			Button^ btn = dynamic_cast<Button^>(control);
-			if (btn != nullptr) {
-				btn->Enabled = false;
-			}
+		for each (Button ^ btn in buttonsPanel->Controls) {
+			btn->Enabled = false;
 		}
 	}
 
 	private: System::Void EnableAvailableButtons() {
-		for each (Control ^ control in buttonsPanel->Controls) {
-			Button^ btn = dynamic_cast<Button^>(control);
-			if (btn != nullptr && btn->Text == "") {
+		for each (Button ^ btn in buttonsPanel->Controls) {
+			if (btn->Text == "") {
 				btn->Enabled = true;
 			}
 		}
@@ -576,27 +540,26 @@ namespace TicTacTouch {
 			DisableAllButtons();
 			this->buttonExit->Visible = true;
 			this->buttonReset->Visible = true;
-			//this->buttonChangeDif->Visible = true;
 			return true;
 		}
+
 		array<int>^ winPatterns = checkIfWin("X");
 		if (winPatterns != nullptr) {
 			this->gameLabel->Text = "You have won!";
 			DrawWinningLine(winPatterns[0], winPatterns[1], winPatterns[2]);
+			DisableAllButtons();
 			this->buttonExit->Visible = true;
 			this->buttonReset->Visible = true;
-			//this->buttonChangeDif->Visible = true;
-			DisableAllButtons();
 			return true;
 		}
+
 		array<int>^ winPatterns2 = checkIfWin("O");
 		if (winPatterns2 != nullptr) {
 			this->gameLabel->Text = "You have lost!";
 			DrawWinningLine(winPatterns2[0], winPatterns2[1], winPatterns2[2]);
+			DisableAllButtons();
 			this->buttonExit->Visible = true;
 			this->buttonReset->Visible = true;
-			//this->buttonChangeDif->Visible = true;
-			DisableAllButtons();
 			return true;
 		}
 
@@ -612,18 +575,13 @@ namespace TicTacTouch {
 	private: System::Void buttonExit_Click(System::Object^ sender, System::EventArgs^ e) {
 		Application::Exit();
 	}
-	
+
 	private: System::Void buttonReset_Click(System::Object^ sender, System::EventArgs^ e) {
 		GameScreen^ gameScreen = gcnew GameScreen(this->difficulty);
 		this->Hide();
 		gameScreen->Show();
-		
 	}
-	
-	private: System::Void buttonChangeDif_Click(System::Object^ sender, System::EventArgs^ e) {
-		//WORK IN PROGRESS
-		this->Close();
-	}
-};
+
+	};
 
 }
