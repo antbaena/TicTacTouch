@@ -65,6 +65,7 @@ namespace TicTacTouch {
 
 		   void InitializeComponent(void)
 		   {
+			   System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(GameScreen::typeid));
 			   this->tittle1 = (gcnew System::Windows::Forms::Label());
 			   this->label2 = (gcnew System::Windows::Forms::Label());
 			   this->difficultyPlaceholder = (gcnew System::Windows::Forms::Label());
@@ -327,6 +328,7 @@ namespace TicTacTouch {
 			   this->Controls->Add(this->label2);
 			   this->Controls->Add(this->tittle1);
 			   this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
+			   this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			   this->Margin = System::Windows::Forms::Padding(4);
 			   this->Name = L"GameScreen";
 			   this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
